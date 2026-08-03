@@ -1,9 +1,7 @@
-#pro-3 collecton manipulator
-
-student = []
-student_dict = {}
+listOfStudent = []
 
 print("Welcome to Student Data Organizer!")
+
 
 while True:
 
@@ -15,19 +13,114 @@ while True:
     print("5. Display Subjects Offered")
     print("6. Exit")
 
-    choice = int(input("Enter your choice: "))
+    selectOption = int(input("Enter Your Choice: "))
 
-# add student details 
+    if selectOption == 1:
 
-    if choice == 1:
+        print("\nEnter Student Details")
 
-        print("\nEnter student details:")
+        studentId = int(input("Enter Student ID: "))
+        name = input("Enter Name: ")
+        age = int(input("Enter Age: "))
+        grade = input("Enter Grade: ")
+        dob = input("Enter DOB (YYYY-MM-DD): ")
+        subject = input("Enter Subjects (comma separated): ").split(",")
 
-        student_id = int(input("Student ID: "))
-        name = input("Name: ")
-        age = int(input("Age: "))
-        grade = input("Grade: ")
-        dob = input("Date of Birth (YYYY-MM-DD): ")
-        subjects = input("Subjects (comma-separated): ")
+        subject = [i.strip() for i in subject]
+        studentTuple = (studentId, dob)
+        subjectSet = set(subject)
+        studentDictionary = {
+                        "studentOfTuple": studentTuple,
+                        "id": studentId,
+                        "name": name,
+                        "age": age,
+                        "Grade": grade,
+                        "subject": subjectSet
+        }
 
-    
+        listOfStudent.append(studentDictionary)
+
+        print("Student Added Successfully")
+
+    elif selectOption == 2:
+
+        print("\n------ Student List ------")
+
+        if len(listOfStudent) == 0:
+            print("No Student Found")
+
+        else:
+
+            for student in listOfStudent:
+
+                print(f"""
+                        Student ID : {student['studentOfTuple'][0]}
+                        DOB        : {student['studentOfTuple'][1]}
+                        Name       : {student['name']}
+                        Age        : {student['age']}
+                        Grade      : {student['Grade']}
+                        Subjects   : {', '.join(student['subject'])}
+                    """)
+
+    elif selectOption == 3:
+
+        studentIdToUpdate = int(input("Enter Student ID: "))
+
+        isMatch = False
+
+        for i in range(len(listOfStudent)):
+            if listOfStudent[i]["id"] == studentIdToUpdate:
+
+                isMatch = True
+
+                oldSubject = input("Enter Subject To Update: ")
+                newSubject = input("Enter New Subject: ")
+                listOfSubject = list(listOfStudent[i]["subject"])
+
+                if oldSubject in listOfSubject:
+
+                    index = listOfSubject.index(oldSubject)
+                    listOfSubject[index] = newSubject
+                    listOfStudent[i]["subject"] = set(listOfSubject)
+
+                    print("Subject Updated Successfully")
+
+                break
+
+    elif selectOption == 4:
+
+        studentIdToDelete = int(input("Enter Student ID: "))
+
+        isMatch = False
+
+        for i in range(len(listOfStudent)):
+            if listOfStudent[i]["id"] == studentIdToDelete:
+
+                del listOfStudent[i]
+                isMatch = True
+
+                print("Student Deleted Successfully")
+
+                break
+
+    elif selectOption == 5:
+
+        allSubjects = set()
+
+        for student in listOfStudent:
+             allSubjects.update(student["subject"])
+
+        print("\nSubjects Offered")
+
+        for sub in allSubjects:
+            print(sub)
+
+    elif selectOption == 6:
+
+        print("Thank You For Using Student Data Organizer")
+
+        break
+
+    else:
+
+        print("Invalid Choice")
