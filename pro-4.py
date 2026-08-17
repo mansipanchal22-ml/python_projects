@@ -51,7 +51,7 @@ print(dataSummary(lst))
 
 
 # factorial
-def factorial(no):                                      # ⭐ CHANGED
+def factorial(no):                              
     """
     Factorial:UDF to calculate factorial using recursion
     """
